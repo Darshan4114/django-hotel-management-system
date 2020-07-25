@@ -45,22 +45,11 @@
             <form id="booking-form" action="" method="POST">
 
                 {% csrf_token %}
-
+                <h2>Are you sure you wanna cancel this Booking? Details-</h2>
+                <h3>{{booking.room.number}}{{booking.get_room_category}} {{booking}}</h3>
                 <!-- Input Div -->
                 <div class="input-div">
-                    <label for="id_check_in">Check In : </label>
-                    <input type="datetime-local" id="id_check_in" name="check_in">
-                </div>
-
-                <!-- Input Div -->
-                <div class="input-div">
-                    <label for="id_check_out">Check Out : </label>
-                    <input type="datetime-local" id="id_check_out" name="check_out">
-                </div>
-
-                <!-- Input Div -->
-                <div class="input-div">
-                    <button type="submit">Book the Room</button>
+                    <button type="submit">Cancel the Booking</button>
                 </div>
 
             </form>
