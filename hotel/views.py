@@ -5,6 +5,19 @@ from .models import Room, Booking
 from .forms import AvailabilityForm
 from hotel.booking_functions.availability import check_availability
 
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import environ
+
+env = environ.Env(
+# set casting, default value
+DEBUG=(bool, False)
+)
+
+environ.Env.read_env()
+
+
 # Create your views here.
 
 
@@ -85,6 +98,20 @@ class RoomDetailView(View):
                 check_out=data['check_out']
             )
             booking.save()
+            message = Mail(
+                from_email='dhabaledarshan@gmail.com',
+                to_emails='dhabalekalpana@gmail.com',
+                subject='Sending from hotelina',
+                html_content='<strong>Sending from hotelina</strong>')
+            try:
+                sg = SendGridAPIClient(env.str('SG_KEY'))
+                response = sg.send(message)
+                print(response.status_code)
+                print(response.body)
+                print(response.headers)
+                print('SENT!!!')
+            except Exception as e:
+                print(e)
             return HttpResponse(booking)
         else:
             return HttpResponse('All of this category of rooms are booked!! Try another one')

@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+import django_heroku
+import dj_database_url
+
+env = environ.Env(
+# set casting, default value
+DEBUG=(bool, False)
+)
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(i5p)=z-p8(m!h*colkbe#&jj3+d66z%dm$q@1s^azz5)*3-!$'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,13 +104,14 @@ WSGI_APPLICATION = 'HMS.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+DATABASES = {'default': dj_database_url.config()}
 
 
 # Password validation
@@ -145,3 +156,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+django_heroku.settings(locals())
