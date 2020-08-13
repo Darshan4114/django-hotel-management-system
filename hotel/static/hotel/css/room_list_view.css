@@ -1,169 +1,152 @@
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Charm:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Charm:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
 /* Colors */
-:root{
-    --primary-text-color: #000;
-    --secondary-text-color: #444;
-    --heading-font: 'Montserrat';
-    --subheading-font: 'Opensans';
+:root {
+  --primary-text-color: #000;
+  --secondary-text-color: #444;
+  --heading-font: "Montserrat";
+  --subheading-font: "Opensans";
 }
 
 /* Root CSS */
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 /* html{
     width:100vw;
 } */
-body{
-    /* background-color: rgb(46, 47, 48); */
-    color:var(--secondary-text-color);
-    font-family: 'Montserrat';
-    max-width:100vw;
-    line-height: 1.25;
+body {
+  /* background-color: rgb(46, 47, 48); */
+  color: var(--secondary-text-color);
+  font-family: "Montserrat";
+  max-width: 100vw;
+  line-height: 1.25;
 }
-img{
-    max-width:100%;
-}
-
-.container{
-    display: flex;
-    max-width: 100%;
-    flex-direction: column;
-    align-items:center;
-}
-h2{
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 3rem;
-    margin-top: 3rem;
-    color: var(--primary-text-color);
+img {
+  max-width: 100%;
 }
 
+.container {
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 3rem;
+  margin-top: 3rem;
+  color: var(--primary-text-color);
+}
 
 /*Brand CSS */
-#logo{
-    width: 131px;
-    font-family: Charm;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    margin: 1rem;
-    color: var(--primary-text-color);
+
+.landing {
+  flex: 1;
+  /* background-image: url(../img/hotel-1.jpg); */
+  /* background-size: cover; */
+  width: 100%;
 }
-.landing{
-    flex:1;
-    /* background-image: url(../img/hotel-1.jpg); */
-    /* background-size: cover; */
-    width:100%;
+.landing h1 {
+  position: absolute;
+  left: 45vw;
+  top: 6rem;
+  font-size: 2rem;
+  line-height: 2.25rem;
+  color: #f7f6f4;
 }
-.landing h1{
-    position: absolute;
-    left: 45vw;
-    top: 6rem;
-    font-size: 2rem;
-    line-height: 2.25rem;
-    color: #F7F6F4;
-}
-.landing h1 span{
-    display: block;
+.landing h1 span {
+  display: block;
 }
 
-#landing-img{
-    width: 100vw;
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 90vh;
-    overflow: hidden;
-    /* height: 414px; */
-    
+#landing-img {
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: 90vh;
+  overflow: hidden;
+  /* height: 414px; */
 }
-
-
 
 /* Rooms */
 
-#rooms{
-    background: #F9F9F9;
-    border-radius: 11px;
-    /* margin: 1rem; */
-    display: grid;
-    grid-column-gap: 2rem;
-    grid-row-gap: 2rem;
-    text-align: center;
-    /* padding: 2rem; */
-    max-width:100vw;
+#rooms {
+  background: #f9f9f9;
+  border-radius: 11px;
+  /* margin: 1rem; */
+  display: grid;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+  text-align: center;
+  /* padding: 2rem; */
+  max-width: 100vw;
 }
 
 /* Room Divs */
-.room{
-    width: 355px;
-    background: #EBEBEB;
-    border-radius: 10px;
-    min-width: 300px;
-    border-radius: 1rem;
-    padding:1rem;
-    margin:0.5rem;
-    flex: 1;
+.room {
+  width: 355px;
+  background: #ebebeb;
+  border-radius: 10px;
+  min-width: 300px;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  flex: 1;
 }
 
-.room:hover{
-    background-color: #d4d4d4;
+.room:hover {
+  background-color: #d4d4d4;
 }
-
 
 /* Inside Room Divs */
-.room h2{
+.room h2 {
+  font-size: 30px;
+  margin: 0.25rem;
+}
+.room p {
+  font-size: 18px;
+  line-height: 20px;
+}
+a {
+  text-decoration: none;
+  color: var(--secondary-text-color);
+}
+
+@media only screen and (min-width: 768px) {
+  #rooms {
+    grid-template-columns: 1fr 1fr;
+  }
+  html {
+    font-size: 22px;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  #rooms {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  html {
     font-size: 30px;
-    margin: 0.25rem;
+  }
+  .landing h1 span {
+    display: inline;
+  }
 }
-.room p{
-    font-size: 18px;
-    line-height: 20px;
+@media only screen and (min-width: 1800px) {
+  #rooms {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  html {
+    font-size: 36px;
+  }
 }
-a{
-    text-decoration: none;
-    color: var(--secondary-text-color);
-}
-
-
-@media only screen and (min-width:768px){
-    #rooms{
-        grid-template-columns: 1fr 1fr;
-    }
-    html{
-        font-size: 22px;
-    }
-}
-@media only screen and (min-width:1300px){
-    #rooms{
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-    html{
-        font-size: 30px;
-    }
-    .landing h1 span{
-        display: inline;
-    }
-}
-@media only screen and (min-width:1800px){
-    #rooms{
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
-    html{
-        font-size: 36px;
-    }
-    
-    
-}
-@media only screen and (max-width:558px){
-    .landing h1{
-        top:4rem;
-        font-size: 1.5rem;
-    }  
-
-    
+@media only screen and (max-width: 558px) {
+  .landing h1 {
+    top: 4rem;
+    font-size: 1.5rem;
+  }
 }
