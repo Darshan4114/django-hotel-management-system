@@ -47,3 +47,4 @@ class Booking(models.Model):
     def get_cancel_booking_url(self):
         return reverse_lazy('hotel:CancelBookingView', args=[self.pk, ])
 
+# Hola im darshan
