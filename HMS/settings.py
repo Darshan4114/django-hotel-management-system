@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # my_apps
     'hotel',
     'hotel.booking_functions',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,7 @@ ROOT_URLCONF = 'HMS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'allauth/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,6 +151,9 @@ USE_TZ = True
 SITE_ID = 1
 
 
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -157,6 +161,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None #This is needed to remove the error you get after removing username field from user model
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

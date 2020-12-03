@@ -10,6 +10,10 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import environ
 
+import stripe
+stripe.api_key = 'sk_test_51Hu0AzH60lA1oSoomphzz4KWIOkf3fyNb6xKnMTLtZuqrYsafvJvMOQXhqxqOV0vy7EkWSuJxV3GxH5q899R8M8l00MDvjRsHl'
+from django.http import JsonResponse
+
 env = environ.Env(
 # set casting, default value
 DEBUG=(bool, False)
@@ -121,3 +125,36 @@ class CancelBookingView(DeleteView):
     model = Booking
     template_name = 'booking_cancel_view.html'
     success_url = reverse_lazy('hotel:BookingListView')
+
+
+def checkout_view(request, amount, product_name, product_image):
+    try:
+        stripe.api_key = 'sk_test_51Hu0AzH60lA1oSoomphzz4KWIOkf3fyNb6xKnMTLtZuqrYsafvJvMOQXhqxqOV0vy7EkWSuJxV3GxH5q899R8M8l00MDvjRsHl'
+        checkout_session = stripe.checkout.Session.create(
+            success_url="http://127.0.0.1:8000/success",
+            cancel_url="http://127.0.0.1:8000/cancel",
+            payment_method_types=["card"],
+             line_items=[
+                {
+                    'price_data': {
+                        'currency': 'inr',
+                        'unit_amount': amount,
+                        'product_data': {
+                            'name': str(product_name),
+                            'images': [str(product_image)],
+                        },
+                    },
+                },
+            ],
+            mode="payment",
+            )
+        return render(request, 'checkout.html', {'checkout_id': checkout_session.id})
+    except Exception as e:
+        return render(request, 'failure.html', {'error': e})
+        
+
+def success_view(request):
+    return render(request, 'success.html')
+
+def cancel_view(request):
+    return render(request, 'cancel.html')
