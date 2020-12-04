@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marina Beach Hotel</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'hotel/css/marina_beach_landing.css' %}"/>
+  </head>
+  <body>
+      <div class="nav">
+        <h3 id="logo">Marina Beach</h3>
+        <ul class="navlist">
+          <a href="/marina_beach_amenties.html">Amenties</a>
+        </ul>
+      </div>
+    
+    <div
+      class="d-flex flex-column align-items-center justify-content-center check_availability"
+    >
+    
+      <div class="headings m-4">
+        <h1>Marina Beach</h1>
+        <h1>Hotel</h1>
+      </div>
+
+      <div id="search-bar" style="color: #fff;">
+          <form method="POST"
+          class="search-form m-0 container"
+          action=""
+        >
+        {% csrf_token %}
+
+
+        
+        <div class="date-row row">
+
+          <div
+            class="form-group d-flex justify-content-space-between col-sm-6 "
+          >
+          {{form.check_in.errors}}
+            <label class="mr-2" for="{{form.check_in.id_for_label}}">From:</label>
+            {{form.check_in}}
+          </div>
+
+          <div class="form-group d-flex justify-content-space-around  col-sm-6 ">
+            {{form.check_out.errors}}
+            <label for="{{form.check_out.id_for_label}}">To: </label>
+            {{form.check_out}}
+          </div>
+        </div>
+          
+        <div class="room-row row">
+          <div class="form-group d-flex justify-content-space-between col-12 col-sm-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                {{form.room_category.errors}}
+                <label class="input-group-text" for="{{form.room_category.id_for_label}}">Choose...</label>
+              </div>
+              <select class="custom-select" name="room_category" id="id_room_category">
+                <option selected>Room Category</option>
+                {%for _,category in form.room_category.field.choices %}
+                <option value="{{category}}">{{category}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+          <div class="form-group row mw-50 m-2">
+            <button class="btn btn-primary col-12  mw-50 " type="submit">
+              Find Room
+            </button>
+          </div>
+          </form>
+
+        
+      </div>
+          
+        <!-- <img id="search-bar-img" src="./static/svg/search_bar.svg" alt="" /> -->
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function setdd(dditem) {
+        document.querySelector("#dropdownlink").textContent = dditem;
+      }
+      // dditems = document.getElementsByClassName("dropdown-item");
+    </script>
+  </body>
+</html>

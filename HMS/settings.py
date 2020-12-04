@@ -16,8 +16,8 @@ import django_heroku
 import dj_database_url
 
 env = environ.Env(
-# set casting, default value
-DEBUG=(bool, False)
+    # set casting, default value
+    DEBUG=(bool, False)
 )
 
 environ.Env.read_env()
@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'HMS.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-if DEBUG==True:
+if DEBUG == True:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -151,19 +151,17 @@ USE_TZ = True
 SITE_ID = 1
 
 
-
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.CustomUser'
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None #This is needed to remove the error you get after removing username field from user model
+# This is needed to remove the error you get after removing username field from user model
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

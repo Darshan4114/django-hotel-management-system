@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
+.nav {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  height: 50px;
+  /* margin: 5rem; */
+  padding: 1.5rem;
+  background-color: (255, 255, 255, 0.1) !important;
+}
+.nav ul.navlist {
+  position: absolute;
+  right: 1.5rem;
+  color: #fff;
+}
+.nav ul.navlist a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+#logo {
+  font-family: "Great Vibes", cursive;
+  flex: 0 1 200px;
+  color: #000;
+  z-index: 1;
+}
+
+.headings h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 4.5rem;
+  color: #f9f9f9;
+  flex: 0 1 100px;
+  align-self: center;
+}
+h1:first-of-type {
+  margin-top: 5rem;
+}
+
+#search-bar {
+  /* flex: 1; */
+  /* max-width: 30rem; */
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #fff9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  /* max-width: 90vw; */
+  margin: 1rem;
+}
+
+.check_availability {
+  background-image: url(../img/hotel-1.2.5.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+/* .form-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem 0.5rem;
+} */
+.form-group a#dropdownMenuLink {
+  min-width: 215px;
+  flex: 7;
+  margin: 0 0.1rem;
+}
+
+/* #room-dropdown {
+  width: 200px;
+} */
+.form-group input,
+.form-group label,
+.form-group div.dropdown {
+  flex: 1 1 100px;
+}
+input {
+  border-radius: 5px;
+}

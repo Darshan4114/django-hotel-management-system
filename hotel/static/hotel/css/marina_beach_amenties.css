@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  scroll-behavior: smooth;
+}
+
+#logo {
+  font-family: "Great Vibes", cursive;
+  position: fixed;
+  margin: 1rem;
+  color: #111;
+  z-index: 1;
+}
+
+#book-a-stay {
+  background-color: #0493e6;
+  color: #f9f9f9;
+  position: fixed;
+  right: 0;
+  margin: 1rem;
+  z-index: 1;
+}
+#left-arrow {
+  position: fixed;
+  right: 0%;
+  margin: 1rem;
+  z-index: 1;
+}
+#left-arrow img {
+  width: 2.2rem;
+  border: 0;
+  outline: 0;
+}
+
+h1 {
+  color: #111;
+}
+h2 {
+  color: #444;
+}
+.row img {
+  max-height: 100vh;
+}
+.col-sm-6 {
+  overflow: hidden;
+  padding: 0;
+}
+.desc {
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.scrolled-down {
+  transform: translateX(200%);
+  transition: all 0.7s ease-in-out;
+}
+.scrolled-up {
+  transform: translateX(0);
+  transition: all 0.5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 100%;
+  /* transition-delay: 5s; */
+  transition: all 0.5s ease-in-out;
+}
+.fade-out {
+  opacity: 0%;
+  transition: all 0.5s ease-in-out;
+}

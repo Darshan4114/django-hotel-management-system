@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    stripe_id = models.CharField(max_length=100, default=None)
+    stripe_id = models.CharField(max_length=100, blank=True, null=True)
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_or_save_user_profile(sender, created, instance, **kwargs):

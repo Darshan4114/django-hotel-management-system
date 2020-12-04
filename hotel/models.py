@@ -5,22 +5,18 @@ from django.urls import reverse_lazy
 # Create your models here.
 
 
+class RoomCategory(models.Model):
+    category = models.CharField(max_length=50)
+    rate = models.FloatField()
+
 class Room(models.Model):
-    ROOM_CATEGORIES = (
-        ('YAC', 'AC'),
-        ('NAC', 'NON-AC'),
-        ('DEL', 'DELUXE'),
-        ('KIN', 'KING'),
-        ('QUE', 'QUEEN'),
-    )
     number = models.IntegerField()
-    category = models.CharField(max_length=3, choices=ROOM_CATEGORIES)
     beds = models.IntegerField()
     capacity = models.IntegerField()
+    category = models.ForeignKey(RoomCategory, on_delete=models.CASCADE, default='NON-AC', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.number}. {dict(self.ROOM_CATEGORIES)[self.category]} Beds = {self.beds} People = {self.capacity}'
-
+        return f'{self.number}. Beds = {self.beds} People = {self.capacity}'
 
 class Booking(models.Model):
     PAYMENT_STATUSES = (
@@ -34,7 +30,6 @@ class Booking(models.Model):
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()
     payment_status = models.CharField(max_length=3, choices=PAYMENT_STATUSES)
-
 
     def __str__(self):
         return f'From = {self.check_in.strftime("%d-%b-%Y %H:%M")} To = {self.check_out.strftime("%d-%b-%Y %H:%M")}'
