@@ -157,7 +157,7 @@ SITE_ID = 1
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 
-# LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 # This is needed to remove the error you get after removing username field from user model

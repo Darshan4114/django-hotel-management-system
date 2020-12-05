@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
 from .models import Room, Booking, RoomCategory
@@ -12,6 +12,11 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import environ
+
+
+import datetime
+import json
+
 
 import stripe
 stripe.api_key = 'sk_test_51Hu0AzH60lA1oSoomphzz4KWIOkf3fyNb6xKnMTLtZuqrYsafvJvMOQXhqxqOV0vy7EkWSuJxV3GxH5q899R8M8l00MDvjRsHl'
@@ -28,24 +33,57 @@ environ.Env.read_env()
 
 class BookingFormView(View):
     def get(self, request, *args, **kwargs):
-        print([(x.category, x.category) for x in RoomCategory.objects.all()])
-        form = AvailabilityForm()
-        if self.request.user.is_anonymous:
-            print('anonymous')
+        if "check_in" in request.session:
+            s = request.session
+            form_data = {
+                "check_in": s['check_in'], "check_out": s['check_out'], "room_category": s['room_category']}
+            # booking_form_data = self.request.session['booking_form_data']
+            # booking_form_data = dict(booking_form_data)
+            # form_data2 = {
+            #     "check_in": "2021-01-01T20:27:00+00:00",
+            #     "check_out": "2021-01-02T20:27:00+00:00",
+            #     "room_category": "NON-AC"
+            # }
+            form = AvailabilityForm(request.POST or None, initial=form_data)
+            print(form)
+        else:
+            form = AvailabilityForm()
         return render(request, 'booking_form.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = AvailabilityForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+
+            print('data_from_form = ', data)
+
             total_room_charge = find_total_room_charge(self.request,
                                                        data['check_in'], data['check_out'], data['room_category'])
-            if self.request.user == 'AnonymousUser':
-                print('fucker')
-            return CheckoutView(self.request, total_room_charge, data['room_category']+' Suite')
-        print('user=', self.request.user)
+            if self.request.user.is_anonymous:
+                # def default(o):
+                #     if isinstance(o, (datetime.date, datetime.datetime)):
+                #         return o.strftime("%Y-%m-%dT%H:%M")
 
-        return HttpResponse('form not valid')
+                # def jsonify_datetime(d):
+                #     return json.dumps(
+                #         d,
+                #         sort_keys=True,
+                #         indent=1,
+                #         default=default
+                #     )
+
+                print('storing_in_session =>', data['check_in'].strftime(
+                    "%Y-%m-%dT%H:%M"), data['check_out'].strftime("%Y-%m-%dT%H:%M"), data['room_category'])
+
+                self.request.session['check_in'] = data['check_in'].strftime(
+                    "%Y-%m-%dT%H:%M")
+                self.request.session['check_out'] = data['check_out'].strftime(
+                    "%Y-%m-%dT%H:%M")
+                self.request.session['room_category'] = data['room_category']
+
+                return redirect(reverse('account_login'))
+            return CheckoutView(self.request, total_room_charge, data['room_category']+' Suite')
+        return HttpResponse('form not valid', form.errors)
 
 
 def RoomListView(request):
