@@ -7,12 +7,16 @@ from .models import RoomCategory
 
 
 class AvailabilityForm(forms.Form):
+    CATEGORY_CHOICES = (('x', 'X'), ('y', 'Y'))
+
+    # [(x.category, x.category) for x in RoomCategory.objects.all()]
+
     check_in = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     check_out = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     room_category = forms.ChoiceField(
-        choices=[(x.category, x.category) for x in RoomCategory.objects.all()], widget=forms.Select(attrs={"class": "mdb-select md-form"}))
+        choices=CATEGORY_CHOICES, widget=forms.Select(attrs={"class": "mdb-select md-form"}))
 
     def check_working_hours(self, start, end):
         check_in = self.cleaned_data.get('check_in')

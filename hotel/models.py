@@ -9,14 +9,17 @@ class RoomCategory(models.Model):
     category = models.CharField(max_length=50)
     rate = models.FloatField()
 
+
 class Room(models.Model):
     number = models.IntegerField()
     beds = models.IntegerField()
     capacity = models.IntegerField()
-    category = models.ForeignKey(RoomCategory, on_delete=models.CASCADE, default='NON-AC', blank=True, null=True)
+    category = models.ForeignKey(
+        RoomCategory, on_delete=models.CASCADE, default='NON-AC', blank=True, null=True)
 
     def __str__(self):
         return f'{self.number}. Beds = {self.beds} People = {self.capacity}'
+
 
 class Booking(models.Model):
     PAYMENT_STATUSES = (
@@ -33,11 +36,6 @@ class Booking(models.Model):
 
     def __str__(self):
         return f'From = {self.check_in.strftime("%d-%b-%Y %H:%M")} To = {self.check_out.strftime("%d-%b-%Y %H:%M")}'
-
-    def get_room_category(self):
-        room_categories = dict(self.room.ROOM_CATEGORIES)
-        room_category = room_categories.get(self.room.category)
-        return room_category
 
     def get_cancel_booking_url(self):
         return reverse_lazy('hotel:CancelBookingView', args=[self.pk, ])
