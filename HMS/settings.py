@@ -169,4 +169,4 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), databases=False)
