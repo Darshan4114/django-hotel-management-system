@@ -7,9 +7,8 @@ from .models import RoomCategory
 
 
 class AvailabilityForm(forms.Form):
-    CATEGORY_CHOICES = (('x', 'X'), ('y', 'Y'))
-
-    # [(x.category, x.category) for x in RoomCategory.objects.all()]
+    CATEGORY_CHOICES = [(x.category, x.category)
+                        for x in RoomCategory.objects.all()]
 
     check_in = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
