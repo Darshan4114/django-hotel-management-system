@@ -2,10 +2,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
-from .models import Room, Booking
+from .models import Room, Booking, RoomCategory
 from .forms import AvailabilityForm
 from hotel.booking_functions.availability import check_availability
-# from hotel.booking_functions.find_total_room_charge import find_total_room_charge
+from hotel.booking_functions.find_total_room_charge import find_total_room_charge
 from django.contrib.auth.decorators import login_required
 
 import os
@@ -57,8 +57,8 @@ class BookingFormView(View):
 
             print('data_from_form = ', data)
 
-            # total_room_charge = find_total_room_charge(self.request,
-            #                                            data['check_in'], data['check_out'], data['room_category'])
+            total_room_charge = find_total_room_charge(self.request,
+                                                       data['check_in'], data['check_out'], data['room_category'])
             if self.request.user.is_anonymous:
                 # def default(o):
                 #     if isinstance(o, (datetime.date, datetime.datetime)):
@@ -79,10 +79,10 @@ class BookingFormView(View):
                     "%Y-%m-%dT%H:%M")
                 self.request.session['check_out'] = data['check_out'].strftime(
                     "%Y-%m-%dT%H:%M")
-                self.request.session['room_category'] = data['room_category']
+                self.request.session['room_category'] = data['room_category'].category
 
                 return redirect(reverse('account_login'))
-            return CheckoutView(self.request, 100, data['room_category']+' Suite')
+            return CheckoutView(self.request, total_room_charge, data['room_category'].category+' Suite')
         return HttpResponse('form not valid', form.errors)
 
 
