@@ -1,21 +1,23 @@
 from django import forms
 from datetime import datetime
 from django.core.exceptions import ValidationError
-from .models import RoomCategory
+# from .models import RoomCategory
 
 #  input_formats=["%Y-%m-%dT%H:%M", ],
 
 
 class AvailabilityForm(forms.Form):
-    CATEGORY_CHOICES = [(x.category, x.category)
-                        for x in RoomCategory.objects.all()]
+    CATEGORY_CHOICES = (('x', 'X'), ('y', 'Y'))
+
+    # [(x.category, x.category)
+    #  for x in RoomCategory.objects.all()]
 
     check_in = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     check_out = forms.DateTimeField(
         required=True, input_formats=["%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M%Z"], widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
-    room_category = forms.ModelChoiceField(
-        choices=CATEGORY_CHOICES, empty_label="Choose Room", widget=forms.Select(attrs={"class": "mdb-select md-form"}))
+    room_category = forms.ChoiceField(
+        choices=CATEGORY_CHOICES, widget=forms.Select(attrs={"class": "mdb-select md-form"}))
 
     def check_working_hours(self, start, end):
         check_in = self.cleaned_data.get('check_in')

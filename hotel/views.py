@@ -2,10 +2,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
-from .models import Room, Booking, RoomCategory
+from .models import Room, Booking
 from .forms import AvailabilityForm
 from hotel.booking_functions.availability import check_availability
-from hotel.booking_functions.find_total_room_charge import find_total_room_charge
+# from hotel.booking_functions.find_total_room_charge import find_total_room_charge
 from django.contrib.auth.decorators import login_required
 
 import os
@@ -57,8 +57,8 @@ class BookingFormView(View):
 
             print('data_from_form = ', data)
 
-            total_room_charge = find_total_room_charge(self.request,
-                                                       data['check_in'], data['check_out'], data['room_category'])
+            # total_room_charge = find_total_room_charge(self.request,
+            #                                            data['check_in'], data['check_out'], data['room_category'])
             if self.request.user.is_anonymous:
                 # def default(o):
                 #     if isinstance(o, (datetime.date, datetime.datetime)):
@@ -82,26 +82,26 @@ class BookingFormView(View):
                 self.request.session['room_category'] = data['room_category']
 
                 return redirect(reverse('account_login'))
-            return CheckoutView(self.request, total_room_charge, data['room_category']+' Suite')
+            return CheckoutView(self.request, 100, data['room_category']+' Suite')
         return HttpResponse('form not valid', form.errors)
 
 
-def RoomListView(request):
-    room = Room.objects.all()[0]
-    room_categories = dict(room.ROOM_CATEGORIES)
-    room_values = room_categories.values()
-    room_list = []
+# def RoomListView(request):
+#     room = Room.objects.all()[0]
+#     room_categories = dict(room.ROOM_CATEGORIES)
+#     room_values = room_categories.values()
+#     room_list = []
 
-    for room_category in room_categories:
-        room = room_categories.get(room_category)
-        room_url = reverse('hotel:RoomDetailView', kwargs={
-                           'category': room_category})
+#     for room_category in room_categories:
+#         room = room_categories.get(room_category)
+#         room_url = reverse('hotel:RoomDetailView', kwargs={
+#                            'category': room_category})
 
-        room_list.append((room, room_url))
-    context = {
-        "room_list": room_list,
-    }
-    return render(request, 'room_list_view.html', context)
+#         room_list.append((room, room_url))
+#     context = {
+#         "room_list": room_list,
+#     }
+#     return render(request, 'room_list_view.html', context)
 
 
 class BookingListView(ListView):
