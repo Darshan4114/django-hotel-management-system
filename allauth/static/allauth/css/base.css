@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}
+.container {
+  max-width: 45rem;
+  margin: 0 auto;
+}
+
+body {
+  font-size: 16px;
+}

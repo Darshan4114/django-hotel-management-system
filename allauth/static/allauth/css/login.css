@@ -1,0 +1,17 @@
+h1 {
+  font-family: montserrat, sans-serif;
+}
+
+form p {
+  display: flex;
+  justify-content: space-between;
+}
+
+form p input {
+  flex: 1;
+  font-size: 1.2rem;
+  max-width: 80%;
+}
+
+form p label {
+}

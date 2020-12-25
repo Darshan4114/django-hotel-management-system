@@ -1,16 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>{% block head_title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block extra_head %}
     {% endblock %}
+    <link rel="stylesheet" href="{% static 'allauth/css/base.css' %}">
   </head>
   <body>
-    {% block body %}
+    <div class="container">
+      {% block body %}
 
     {% if messages %}
     <div>
-      <strong>Messages:</strong>
+      <!-- <strong>Messages:</strong> -->
       <ul>
         {% for message in messages %}
         <li>{{message}}</li>
@@ -20,14 +24,14 @@
     {% endif %}
 
     <div>
-      <strong>Menu:</strong>
+      <!-- <strong>Menu:</strong> -->
       <ul>
         {% if user.is_authenticated %}
         <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        <li><a href="{% url 'account_logout' %}">Logout</a></li>
         {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        <li><a href="{% url 'account_login' %}">Login</a></li>
+        <li><a href="{% url 'account_signup' %}">Register</a></li>
         {% endif %}
       </ul>
     </div>
@@ -36,5 +40,6 @@
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
+    </div>
   </body>
 </html>
