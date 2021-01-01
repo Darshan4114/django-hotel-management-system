@@ -2,16 +2,29 @@ h1 {
   font-family: montserrat, sans-serif;
 }
 
-form p {
+/* form {
+  max-width: 90%;
+} */
+
+form {
   display: flex;
+  margin: 0.25em;
+  flex-direction: column;
+  justify-content: space-between;
+}
+form div {
+  display: flex;
+  margin: 0.25em;
+  /* flex-direction: column; */
   justify-content: space-between;
 }
 
-form p input {
+form div input {
   flex: 1;
   font-size: 1.2rem;
   max-width: 80%;
 }
 
-form p label {
+form div label {
+  flex: 1;
 }

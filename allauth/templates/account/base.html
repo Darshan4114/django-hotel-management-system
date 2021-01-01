@@ -3,13 +3,14 @@
 <html>
   <head>
     <title>{% block head_title %}{% endblock %}</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block extra_head %}
     {% endblock %}
     <link rel="stylesheet" href="{% static 'allauth/css/base.css' %}">
   </head>
   <body>
-    <div class="container">
+    <!-- <div class="container"> -->
       {% block body %}
 
     {% if messages %}
@@ -27,11 +28,11 @@
       <!-- <strong>Menu:</strong> -->
       <ul>
         {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Logout</a></li>
+        <!-- <li><a href="{% url 'account_email' %}">Change E-mail</a></li> -->
+        <!-- <li><a href="{% url 'account_logout' %}">Logout</a></li> -->
         {% else %}
-        <li><a href="{% url 'account_login' %}">Login</a></li>
-        <li><a href="{% url 'account_signup' %}">Register</a></li>
+        <!-- <li><a href="{% url 'account_login' %}">Login</a></li> -->
+        <!-- <li><a href="{% url 'account_signup' %}">Register</a></li> -->
         {% endif %}
       </ul>
     </div>
@@ -40,6 +41,6 @@
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
-    </div>
+    <!-- </div> -->
   </body>
 </html>
