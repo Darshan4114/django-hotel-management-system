@@ -1,21 +1,133 @@
 {% extends "account/base.html" %}
 
+{% load static %}
+
 {% load i18n %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
+{% block extra_head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico'%}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/bootstrap/css/bootstrap.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/animate/animate.css'%}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/css-hamburgers/hamburgers.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/animsition/css/animsition.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/select2/select2.min.css'%}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/daterangepicker/daterangepicker.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/css/util.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/css/main.css'%}">
+
+{% endblock %}
+
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<div class="limiter">
+  <div class="container-login100" style="background-image: url('{% static 'allauth/images/bg-01.jpg'%}');">
+    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+      <form class="signup login100-form validate-form flex-sb flex-w" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <h1 class="login100-form-title p-b-53">
+          {% trans "Sign Up" %}
+          </h1>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+        <a href="#" class="btn-face m-b-20">
+          <i class="fa fa-facebook-official"></i>
+          Facebook
+        </a>
+
+        <a href="#" class="btn-google m-b-20">
+          <img src="{% static 'allauth/images/icons/icon-google.png' %}" alt="GOOGLE">
+          Google
+        </a>
+        
+        <div class="p-t-31 p-b-9">
+          <label for="id_email" class="txt1">
+            {% trans 'Email' %}
+          </label>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate = "Username is required">
+          <input class="input100" type="email" name="email" placeholder="Email address" required="" id="id_email">
+          <span class="focus-input100"></span>
+        </div>
+        
+        <div class="p-t-13 p-b-9">
+          <label for="id_password1" class="txt1" style="display: inline;">
+            {% trans 'Password' %}
+          </label>
+
+          <a href="{% url 'account_reset_password' %}" class="txt2 bo1 m-l-5">
+            {% trans 'Forgot?' %}
+          </a>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate = "Password is required">
+          <input class="input100"  type="password" name="password1" placeholder="Password" required="" id="id_password1" >
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="p-t-13 p-b-9">
+          <label for="id_password2" class="txt1">
+            {% trans 'Please Repeat Password' %}
+          </label>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate = "Please repeat password to confirm">
+          <input class="input100"  type="password" name="password2" placeholder="Password Repeat" required="" id="id_password2" >
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="container-login100-form-btn m-t-17">
+          <button type="submit" class="login100-form-btn">
+            {% trans 'Sign Up' %}
+          </button>
+        </div>
+
+        <div class="w-full text-center p-t-55">
+          <span class="txt2">
+            {% trans 'Already a member?' %}
+          </span>
+
+          <a href="{{ login_url }}" class="txt2 bo1">
+            {% trans 'Login' %}
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'allauth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static 'allauth/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'allauth/js/main.js' %}"></script>
 
 {% endblock %}

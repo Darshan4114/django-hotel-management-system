@@ -231,3 +231,7 @@ def success_view(request):
 
 def cancel_view(request):
     return render(request, 'cancel.html')
+
+
+def contact_us(request):
+    return render(request, 'contact_us.html')

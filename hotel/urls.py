@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BookingListView, RoomDetailView, CancelBookingView, CheckoutView, success_view, cancel_view, BookingFormView
+from .views import BookingListView, RoomDetailView, CancelBookingView, CheckoutView, success_view, cancel_view, BookingFormView, contact_us
 app_name = 'hotel'
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('checkout/', CheckoutView, name='CheckoutView'),
     path('success/', success_view, name='success_view'),
     path('cancel/', cancel_view, name='cancel_view'),
+    path('contact-us/', contact_us, name="contact_us")
 
 ]
