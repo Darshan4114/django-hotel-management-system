@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
 from .models import Room, Booking, RoomCategory
-from .forms import AvailabilityForm
+from .forms import AvailabilityForm, PersonForm
 from hotel.booking_functions.availability import check_availability
 from hotel.booking_functions.find_total_room_charge import find_total_room_charge
 from django.contrib.auth.decorators import login_required
@@ -57,32 +57,31 @@ class BookingFormView(View):
 
             print('data_from_form = ', data)
 
-            total_room_charge = find_total_room_charge(self.request,
-                                                       data['check_in'], data['check_out'], data['room_category'])
-            if self.request.user.is_anonymous:
-                # def default(o):
-                #     if isinstance(o, (datetime.date, datetime.datetime)):
-                #         return o.strftime("%Y-%m-%dT%H:%M")
+            # if self.request.user.is_anonymous:
+            # def default(o):
+            #     if isinstance(o, (datetime.date, datetime.datetime)):
+            #         return o.strftime("%Y-%m-%dT%H:%M")
 
-                # def jsonify_datetime(d):
-                #     return json.dumps(
-                #         d,
-                #         sort_keys=True,
-                #         indent=1,
-                #         default=default
-                #     )
+            # def jsonify_datetime(d):
+            #     return json.dumps(
+            #         d,
+            #         sort_keys=True,
+            #         indent=1,
+            #         default=default
+            #     )
 
-                print('storing_in_session =>', data['check_in'].strftime(
-                    "%Y-%m-%dT%H:%M"), data['check_out'].strftime("%Y-%m-%dT%H:%M"), data['room_category'])
+            print('storing_in_session =>', data['check_in'].strftime(
+                "%Y-%m-%dT%H:%M"), data['check_out'].strftime("%Y-%m-%dT%H:%M"), data['room_category'])
 
-                self.request.session['check_in'] = data['check_in'].strftime(
-                    "%Y-%m-%dT%H:%M")
-                self.request.session['check_out'] = data['check_out'].strftime(
-                    "%Y-%m-%dT%H:%M")
-                self.request.session['room_category'] = data['room_category'].category
-
-                return redirect(reverse('account_login'))
-            return CheckoutView(self.request, total_room_charge, data['room_category'].category+' Suite')
+            request.session['check_in'] = data['check_in'].strftime(
+                "%Y-%m-%dT%H:%M")
+            request.session['check_out'] = data['check_out'].strftime(
+                "%Y-%m-%dT%H:%M")
+            request.session['room_category'] = data['room_category'].category
+            request.session['amount'] = find_total_room_charge(
+                data['check_in'], data['check_out'], data['room_category'])
+            # return redirect(reverse('account_login'))
+            return redirect('hotel:CheckoutView')
         return HttpResponse('form not valid', form.errors)
 
 
@@ -189,39 +188,63 @@ class CancelBookingView(DeleteView):
     success_url = reverse_lazy('hotel:BookingListView')
 
 
-@login_required
-def CheckoutView(request, amount, product_name):
-    try:
-        stripe.api_key = 'sk_test_51Hu0AzH60lA1oSoomphzz4KWIOkf3fyNb6xKnMTLtZuqrYsafvJvMOQXhqxqOV0vy7EkWSuJxV3GxH5q899R8M8l00MDvjRsHl'
-        checkout_session = stripe.checkout.Session.create(
-            success_url="http://127.0.0.1:8000/success",
-            cancel_url="http://127.0.0.1:8000/cancel",
-            payment_method_types=["card"],
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'inr',
-                        'unit_amount': int(amount)*100,
-                        'product_data': {
-                            'name': product_name,
+class CheckoutView(View):
 
-                        },
-                    },
-                    'quantity': 1
-                },
+    def get(self, request, *args, **kwargs):
+        person_form = PersonForm()
+        # print('r = ', self.request.session)
+        print(request.session['check_in'])
 
-            ],
-            mode="payment",
-        )
         context = {
-            'checkout_id': checkout_session.id,
-            'product_name': product_name,
-            'amount': amount,
-            'product_image': '',
+            "person_form": person_form,
+            "amount": request.session['amount'],
+
         }
-        return render(request, 'checkout.html', context)
-    except Exception as e:
-        return render(request, 'failure.html', {'error': e})
+        return render(self.request, 'checkout.html', context)
+
+    def post(self, request, *args, **kwargs):
+        person_form = PersonForm(request)
+        if person_form.is_valid():
+            person_name = person_form.cleaned_data['name']
+            person_email = person_form.cleaned_data['email']
+
+            stripe.Customer.create(
+                name=person_name,
+                email=person_email
+            )
+            try:
+                stripe.api_key = 'sk_test_51Hu0AzH60lA1oSoomphzz4KWIOkf3fyNb6xKnMTLtZuqrYsafvJvMOQXhqxqOV0vy7EkWSuJxV3GxH5q899R8M8l00MDvjRsHl'
+                checkout_session = stripe.checkout.Session.create(
+                    success_url="http://127.0.0.1:8000/success",
+                    cancel_url="http://127.0.0.1:8000/cancel",
+                    payment_method_types=["card"],
+                    line_items=[
+                        {
+                            'price_data': {
+                                'currency': 'inr',
+                                'unit_amount': int(request.session['amount'])*100,
+                                'product_data': {
+                                    'name': request.session['room_category'],
+
+                                },
+                            },
+                            'quantity': 1
+                        },
+
+                    ],
+                    mode="payment",
+                )
+                print(x)
+                context = {
+                    'checkout_id': checkout_session.id,
+                    'product_name': request.session['room_category'],
+                    'amount': request.session['amount'],
+                    'product_image': '',
+                }
+                print('chkout_context = ', context)
+                return render(request, 'checkout.html', context)
+            except Exception as e:
+                return render(request, 'failure.html', {'error': e})
 
 
 def success_view(request):

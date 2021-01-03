@@ -44,3 +44,8 @@ class Booking(models.Model):
         return reverse_lazy('hotel:CancelBookingView', args=[self.pk, ])
 
 # Hola im darshan
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()

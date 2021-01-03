@@ -36,7 +36,7 @@
   <div class="container-login100" style="background-image: url('{% static 'allauth/images/bg-01.jpg' %}');">
     <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
       <form class=" login login100-form validate-form flex-sb flex-w" method="POST" action="{% url 'account_login' %}">
-
+        {% csrf_token %}
         {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}

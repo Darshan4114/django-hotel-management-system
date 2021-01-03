@@ -15,7 +15,13 @@
         />
         <div class="description">
           <h3>{{product_name}}</h3>
+
           <h5>{{amount}}</h5>
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{person_form.as_p}}
+            <button type="submit">Submit</button>
+          </form>
         </div>
       </div>
       <button id="checkout-button">Checkout {{checkout_id}}</button>
