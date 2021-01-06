@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Confirmation for Hotel Management System</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="{% static 'hotel/css/checkout_confirm.css' %}">
+</head>
+<body>
+    <section class="info">
+        <h1>Checkout Confirmation Page</h1>
+        <p> Here you will confirm your details and click "Continue"</p>
+        <p> You will be taken to a stripe payment page, which is hosted by Stripe itself! (so no worries about security)</p>
+        <p> You will <strong>NOT BE CHARGED</strong> money. But still don't enter actual credit/debit card data </p>
+        <p> Dummy Data for successful payment: </p>
+        <p> - Card number: <pre> 4242 4242 4242 4242 </pre></p>
+        <p>You can enter any random CVV number, and random name and email</p>
+
+    </section>
+    <section class="confirmation">
+        <p>Please confirm the details</p>
+        <p>Name: {{person.name}}</p>
+        <p>Email: {{person.email}}</p>
+        <p>$ {{amount}}</p>
+        <p>{{room_name}} Suite</p>
+        <p>Check In : {{check_in}}</p>
+        <p>Check Out : {{check_out}}</p>
+    </section>
+   
+    
+    <button id="checkout_btn">Checkout</button>
+</body>
+<script>
+    const checkout_id = `{{ checkout_id }}`; //Getting checkout_id from Django context.
+
+    var stripe = Stripe("pk_test_51Hu0AzH60lA1oSooKBHVwQkZ3afq3ST2RISi3oc9G35vFQUQSMUESSorx6Sd700QYz5cY5M3Pyxf9mwZVk1nBPGu00LPxShanC");
+    var checkoutButton = document.getElementById("checkout_btn");
+    checkoutButton.addEventListener("click", function () { 
+
+      stripe.redirectToCheckout({
+        sessionId:`${checkout_id}` //Passing in the checkout_id variable.
+      })
+      .then(function(result) {
+        if (result.error) {
+            alert(result.error.message);
+          }
+      })
+      .catch(function (error) {
+          console.error("Error:", error);
+        })
+    });
+  </script>
+</html>

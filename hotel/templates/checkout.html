@@ -1,51 +1,105 @@
+{% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Buy cool new product</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <title>Simple Checkout Demonstration for Hotel Management System</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico'%}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/bootstrap/css/bootstrap.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/animate/animate.css'%}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/css-hamburgers/hamburgers.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/animsition/css/animsition.min.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/select2/select2.min.css'%}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/vendor/daterangepicker/daterangepicker.css'%}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'allauth/css/util.css'%}">
+  <link rel="stylesheet" type="text/css" href="{% static 'allauth/css/main.css'%}">
+  <link rel="stylesheet" href="{%static 'hotel/css/checkout.css' %}">
   </head>
   <body>
-    <section>
-      <div class="product">
-        <img
-          src="https://i.imgur.com/EHyR2nP.png"
-          alt="{{product_name}}"
-        />
-        <div class="description">
-          <h3>{{product_name}}</h3>
-
-          <h5>{{amount}}</h5>
-          <form action="" method="POST">
+    <div class="limiter">
+      <div class="container-login100" style="background-image: url('{% static 'allauth/images/bg-01.jpg'%}');">
+        <div class="wrap-login100 p-l-110 p-r-110 p-t-52 p-b-33">
+          <form class="signup login100-form validate-form flex-sb flex-w" method="POST" action="">
             {% csrf_token %}
-            {{person_form.as_p}}
-            <button type="submit">Submit</button>
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <h2 class="login100-form-title login-register-strike"> login / register. </h2> 
+            <h1 class="login100-form-title p-b-40">
+              {% trans 'Just Name and Email'%}
+            </h1>
+            <blockquote class="info">NOTE: You will <strong>NOT</strong> be charged money.&#13;
+              So you can continue and test the app! Cheers &#x1f603; 
+            </blockquote>
+
+            
+            <div class="p-t-31 p-b-9">
+              <label for="id_name" class="txt1">
+                {% trans 'Name' %}
+              </label>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Name is required">
+              <input class="input100" type="text" name="name" placeholder="Name ( Not Required )"  id="id_name">
+              <span class="focus-input100"></span>
+            </div>
+            
+            <div class="p-t-13 p-b-9">
+              <label for="id_email" class="txt1" style="display: inline;">
+                {% trans 'Email' %}
+              </label>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Email is required">
+              <input class="input100"  type="email" name="email" placeholder="Email ( Not Required ) "  id="id_email" >
+              <span class="focus-input100"></span>
+            </div>
+    
+         
+    
+            <div class="container-login100-form-btn m-t-27">
+              <button type="submit" class="login100-form-btn">
+                {% trans 'Randomize Data and Continue' %}
+              </button>
+            </div>
           </form>
+          <p class="p-t-15"> P.S. This form generates random data so your data is <strong>NOT</strong> publicly visible! </p>
+
         </div>
       </div>
-      <button id="checkout-button">Checkout {{checkout_id}}</button>
-    </section>
-   
+    </div>
+    
+    
+    <div id="dropDownSelect1"></div>
+    
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/animsition/js/animsition.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'allauth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/select2/select2.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/daterangepicker/moment.min.js' %}"></script>
+    <script src="{% static 'allauth/vendor/daterangepicker/daterangepicker.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'allauth/vendor/countdowntime/countdowntime.js' %}"></script>
+    <!--===============================================================================================-->
+    <!-- <script src="{% static 'allauth/js/main.js' %}"></script>    -->
   </body>
-  <script>
-    const checkout_id = `{{ checkout_id }}`; //Getting checkout_id from Django context.
-
-    var stripe = Stripe("pk_test_51Hu0AzH60lA1oSooKBHVwQkZ3afq3ST2RISi3oc9G35vFQUQSMUESSorx6Sd700QYz5cY5M3Pyxf9mwZVk1nBPGu00LPxShanC");
-    var checkoutButton = document.getElementById("checkout-button");
-    checkoutButton.addEventListener("click", function () { 
-
-      stripe.redirectToCheckout({
-        sessionId:`${checkout_id}` //Passing in the checkout_id variable.
-      })
-      .then(function(result) {
-        if (result.error) {
-            alert(result.error.message);
-          }
-      })
-      .catch(function (error) {
-          console.error("Error:", error);
-        })
-    });
-  </script>
+  
 </html>

@@ -1,0 +1,7 @@
+.confirmation {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  margin: 1.5em;
+  padding: 1em;
+  display: inline-block;
+}
