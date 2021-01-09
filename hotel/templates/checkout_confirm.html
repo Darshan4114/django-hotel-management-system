@@ -8,30 +8,36 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="{% static 'hotel/css/checkout_confirm.css' %}">
+    <!-- <link rel="stylesheet" href="../static/hotel/css/checkout_confirm.css"> -->
 </head>
 <body>
+  <div class="container">
     <section class="info">
-        <h1>Checkout Confirmation Page</h1>
-        <p> Here you will confirm your details and click "Continue"</p>
-        <p> You will be taken to a stripe payment page, which is hosted by Stripe itself! (so no worries about security)</p>
-        <p> You will <strong>NOT BE CHARGED</strong> money. But still don't enter actual credit/debit card data </p>
-        <p> Dummy Data for successful payment: </p>
-        <p> - Card number: <pre> 4242 4242 4242 4242 </pre></p>
-        <p>You can enter any random CVV number, and random name and email</p>
+      <p class="warning"> You will <strong>NOT BE CHARGED</strong> money. But still don't enter actual credit/debit card data </p>
 
-    </section>
-    <section class="confirmation">
-        <p>Please confirm the details</p>
-        <p>Name: {{person.name}}</p>
-        <p>Email: {{person.email}}</p>
-        <p>$ {{amount}}</p>
-        <p>{{room_name}} Suite</p>
-        <p>Check In : {{check_in}}</p>
-        <p>Check Out : {{check_out}}</p>
-    </section>
+      <h3>Card Number : </h3>
+      <h2> 4242 4242 4242 4242 </h2>
+      <p>CVV number, name and email can be random.</p>
+      <p class="small">(Dummy Data for successful payment)</p>
+
+  </section>
+  <section class="booking">
+    <div class="booking-details">
+      <p>Name: {{person.name}}</p>
+      <p>Email: {{person.email}}</p>
+      <p>$ {{amount}}</p>
+      <p>{{room_name}} Suite</p>
+      <p>Check In : {{check_in}}</p>
+      <p>Check Out : {{check_out}}</p>
+    </div>
+      <button id="checkout_btn">Checkout</button>
+  </section> 
+
+  </div>
+   
    
     
-    <button id="checkout_btn">Checkout</button>
+    
 </body>
 <script>
     const checkout_id = `{{ checkout_id }}`; //Getting checkout_id from Django context.
