@@ -15,7 +15,7 @@ This is a Django Hotel Management System
          
  5. Create a .env file in your "HMS" folder.
          ![Configuring virtual environment](https://github.com/Darshan4114/Django_HMS/blob/main/readme_images/django_hms_create_dotenv_file.png) 
- *Now since we are using environment variables from the beginning here, so that the application remains flexible and you can deploy easily without much HARD code to change*
+  *Now since we are using environment variables from the beginning here, so that the application remains flexible and you can deploy easily without much HARD code to change
  
 6. Make migrations and migrate.
    *Run these commands*
