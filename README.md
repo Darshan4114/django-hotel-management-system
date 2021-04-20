@@ -14,7 +14,7 @@ This is a Django Hotel Management System
          ![Configuring virtual environment](https://github.com/Darshan4114/Django_HMS/blob/main/readme_images/django_hms_pip_install_done.png)
          
  5. Create a .env file in your "HMS" folder.
-         ![Configuring virtual environment](https://github.com/Darshan4114/Django_HMS/blob/main/readme_images/django_hms_create_dotenv_file.png) 
+         ![Configuring virtual environment](https://github.com/Darshan4114/Django_HMS/blob/main/readme_images/django_hms_create_dotenv_file.png)   
   *Now since we are using environment variables from the beginning here, so that the application remains flexible and you can deploy easily without much HARD code to change
  
 6. Make migrations and migrate.
@@ -44,4 +44,4 @@ This is a Django Hotel Management System
 4. Start using the app! You can use the Stripe features by creating a stripe account and putting in the client id and secret environment variables.
 5. Cheers! Thats all there is to it
 
-### Thanks for using my repository, if you find any bugs, you can raise an issue. If you would like to help me make it better, I will very much appreciate your PR. Thank you
+**Thanks for using my repository, if you find any bugs, you can raise an issue. If you would like to help me make it better, I will very much appreciate your PR. Thank you :)**
