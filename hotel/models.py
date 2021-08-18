@@ -43,9 +43,6 @@ class Booking(models.Model):
     def get_cancel_booking_url(self):
         return reverse_lazy('hotel:CancelBookingView', args=[self.pk, ])
 
-# Hola im darshan
-
-
 class Person(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
