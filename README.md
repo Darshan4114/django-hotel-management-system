@@ -45,3 +45,6 @@ This is a Django Hotel Management System
 5. Cheers! Thats all there is to it
 
 **Thanks for using my repository, if you find any bugs, you can raise an issue. If you would like to help me make it better, I will very much appreciate your PR. Thank you :)**
+
+My Web Developer Portfolio - https://darshandhabale.com
+I have updated this portfolio with my latest neo-brutalism and hand drawn design.
